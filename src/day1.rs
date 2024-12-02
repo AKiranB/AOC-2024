@@ -68,30 +68,26 @@ pub fn consolidate_lists(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
 
 // Once again consider your left and right lists. What is their similarity score?
 
-pub fn calculate_similarity_score (left: &Vec<i32>, right:&Vec<i32>) -> i32 {
-
+pub fn calculate_similarity_score(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
     let sorted_left: Vec<i32> = sort_list(left);
     let sorted_right: Vec<i32> = sort_list(right);
 
     let mut similarity_score: i32 = 0;
 
-    let mut i:usize= 0;
-    let mut j:usize = 0;
-    let mut seen_count:i32 = 0;
-     
-    while i < sorted_left.len() && j < sorted_right.len() {
-        if sorted_left[i] == sorted_right[j]{
-            seen_count += 1;
-            j += 1 
-        }else if sorted_right[j]> sorted_left[i] {
-            similarity_score += sorted_left[i] * seen_count;
-            seen_count = 0;
-            i += 1
-        }else {
-            j+= 1;
-            i+= 1;
-        }
+    println!("Sorted Left: {:?}", sorted_left);
+    println!("Sorted Right: {:?}", sorted_right);
+
+    for num in sorted_left.iter() {
+        let mut char_count = 0;
+        for right_num in sorted_right.iter() {
+            if num == right_num {
+                char_count += 1;
+            }
+        } 
+        similarity_score += num * char_count;
     }
-    
+    println!("Final similarity_score: {}", similarity_score);
     similarity_score
 }
+
+//no dice

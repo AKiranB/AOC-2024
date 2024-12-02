@@ -1,7 +1,9 @@
 use day1::{calculate_similarity_score, consolidate_lists};
 
 mod day1;
-static STRING:&str = r###"77442   88154
+mod day1_test;
+static STRING:&str = r###"
+77442   88154
 71181   76363
 49755   69158
 38798   22488
