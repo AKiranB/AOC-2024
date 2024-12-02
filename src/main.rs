@@ -1,4 +1,4 @@
-use day1::consolidate_lists;
+use day1::{calculate_similarity_score, consolidate_lists};
 
 mod day1;
 static STRING:&str = r###"77442   88154
@@ -1010,13 +1010,13 @@ struct SplitArrays {
 }
 
 fn split_into_two_arrs(data: &str) -> SplitArrays {
-    let mut left = Vec::new();
-    let mut right = Vec::new();
+    let mut left: Vec<i32> = Vec::new();
+    let mut right:Vec<i32> = Vec::new();
 
     for line in data.lines() {
         let numbers: Vec<i32> = line
             .split_whitespace()
-            .filter_map(|n| n.parse::<i32>().ok())
+            .filter_map(|n: &str| n.parse::<i32>().ok())
             .collect();
 
         if numbers.len() == 2 {
@@ -1027,9 +1027,10 @@ fn split_into_two_arrs(data: &str) -> SplitArrays {
     SplitArrays { left, right }
 }
 
-
 fn main() {
     let arrays = split_into_two_arrs(STRING);
-    let result:i32 = consolidate_lists(arrays.left, arrays.right);
-    println!("{:?}", result); // returns 2176849
+    let result:i32 = consolidate_lists(&arrays.left, &arrays.right);
+    let result2:i32 = calculate_similarity_score(&arrays.left, &arrays.right);
+    println!("{:?}", result);
+    println!("{:?}", result2)
 }
