@@ -14,20 +14,16 @@
 
 // God knows if this is built in rust
 
+
 fn sort_list(list: Vec<i32>) -> Vec<i32>{
     let mut array: Vec<i32> = list.clone(); 
     array.sort();
     array
 }
-
-// this too lol
-
 fn handle_sum(a: i32, b:i32) -> i32{
     if a > b {return a - b}
     return b - a
 }
-
-
 pub fn consolidate_lists(left: Vec<i32>, right: Vec<i32>) -> i32 {
     let sorted_left: Vec<i32> = sort_list(left);
     let sorted_right: Vec<i32> = sort_list(right);
