@@ -82,7 +82,6 @@ pub fn calculate_similarity_score(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
             left_map.insert(*num, 1);
         }
     }
-    println!("Left Map After Population: {:?}", left_map);
 
     for num in right.iter() {
         if let Some(count) = right_map.get_mut(num) {
@@ -91,22 +90,12 @@ pub fn calculate_similarity_score(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
             right_map.insert(*num, 1);
         }
     }
-    println!("Right Map After Population: {:?}", right_map);
 
     let mut similarity_score: i32 = 0;
     for (&num, &left_count) in left_map.iter() {
-        if let Some(&right_count) = right_map.get(&num) {
-            let increment = num * (left_count + right_count);
-            println!(
-                "Matching Number: {}, Left Count: {}, Right Count: {}, Increment: {}",
-                num, left_count, right_count, increment
-            );
+        if let Some(&right_count) = right_map.get(&num) { 
             similarity_score += num * (left_count * right_count);
-            println!("Updated Similarity Score: {}", similarity_score);
         }
     }
-
-    println!("Final Similarity Score: {}", similarity_score);
-
     similarity_score
 }
