@@ -2,6 +2,7 @@ use day1::{calculate_similarity_score, consolidate_lists};
 
 mod day1;
 mod day1_test;
+mod day2;
 static STRING:&str = r###"
 77442   88154
 71181   76363

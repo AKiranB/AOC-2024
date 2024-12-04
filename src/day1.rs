@@ -14,6 +14,8 @@
 
 //pt1
 
+use std::collections::HashMap;
+
 fn sort_list(list: &Vec<i32>) -> Vec<i32>{
     let mut array: Vec<i32> = list.clone(); 
     array.sort();
@@ -68,26 +70,43 @@ pub fn consolidate_lists(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
 
 // Once again consider your left and right lists. What is their similarity score?
 
+
 pub fn calculate_similarity_score(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
-    let sorted_left: Vec<i32> = sort_list(left);
-    let sorted_right: Vec<i32> = sort_list(right);
+    let mut left_map: HashMap<i32, i32> = HashMap::new();
+    let mut right_map: HashMap<i32, i32> = HashMap::new();
+
+    for num in left.iter() {
+        if let Some(count) = left_map.get_mut(num) {
+            *count += 1;
+        } else {
+            left_map.insert(*num, 1);
+        }
+    }
+    println!("Left Map After Population: {:?}", left_map);
+
+    for num in right.iter() {
+        if let Some(count) = right_map.get_mut(num) {
+            *count += 1;
+        } else {
+            right_map.insert(*num, 1);
+        }
+    }
+    println!("Right Map After Population: {:?}", right_map);
 
     let mut similarity_score: i32 = 0;
-
-    println!("Sorted Left: {:?}", sorted_left);
-    println!("Sorted Right: {:?}", sorted_right);
-
-    for num in sorted_left.iter() {
-        let mut char_count = 0;
-        for right_num in sorted_right.iter() {
-            if num == right_num {
-                char_count += 1;
-            }
-        } 
-        similarity_score += num * char_count;
+    for (&num, &left_count) in left_map.iter() {
+        if let Some(&right_count) = right_map.get(&num) {
+            let increment = num * (left_count + right_count);
+            println!(
+                "Matching Number: {}, Left Count: {}, Right Count: {}, Increment: {}",
+                num, left_count, right_count, increment
+            );
+            similarity_score += num * (left_count * right_count);
+            println!("Updated Similarity Score: {}", similarity_score);
+        }
     }
-    println!("Final similarity_score: {}", similarity_score);
+
+    println!("Final Similarity Score: {}", similarity_score);
+
     similarity_score
 }
-
-//no dice
