@@ -1,7 +1,8 @@
 use day1::{calculate_similarity_score, consolidate_lists};
+use day2::{find_safe_levels};
 
 mod day1;
-mod day1_test;
+mod test;
 mod day2;
 static STRING:&str = r###"
 77442   88154
@@ -1031,9 +1032,10 @@ fn split_into_two_arrs(data: &str) -> SplitArrays {
 }
 
 fn main() {
-    let arrays = split_into_two_arrs(STRING);
+    let arrays:SplitArrays = split_into_two_arrs(STRING);
     let result:i32 = consolidate_lists(&arrays.left, &arrays.right);
     let result2:i32 = calculate_similarity_score(&arrays.left, &arrays.right);
+    find_safe_levels([[1,2,3,4,5]].to_vec());
     println!("{:?}", result);
     println!("{:?}", result2)
 }
