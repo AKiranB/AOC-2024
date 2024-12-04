@@ -10,10 +10,6 @@
 //  list with a 7 from the right list, the distance apart is 4;
 //  if you pair up a 9 with a 3, the distance apart is 6.
 
-// God knows if this is built in rust
-
-//pt1
-
 use std::collections::HashMap;
 
 fn sort_list(list: &Vec<i32>) -> Vec<i32>{
