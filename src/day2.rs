@@ -32,13 +32,11 @@
 // ];
 
 fn safely_find_diff(n: i32, z: i32) -> i32 {
-    println!("Calculating difference between n: {} and z: {}", n, z);
     let res = if n > z {
         n - z
     } else {
         z - n
     };
-    println!("Result (res): {}", res);
     res
 }
 
@@ -55,7 +53,7 @@ fn get_curr_direction (x:i32, z:i32) -> i32{
     }
 }
 
-pub fn find_safe_levels(reports: Vec<[i32; 5]>) -> i32 {
+pub fn find_safe_levels(reports: Vec<Vec<i32>> ) -> i32 {
     let mut safe_levels: i32 = 0;
 
     for (report_index, report) in reports.iter().enumerate() {
@@ -63,14 +61,13 @@ pub fn find_safe_levels(reports: Vec<[i32; 5]>) -> i32 {
         let mut direction =  1;
 
         for i in 0..(report.len() - 1) {
-
-            if i < 2 {
-                direction = get_curr_direction(report[i], report[i+1])
-            }
-                    
             let curr = report[i];
             let next = report[i + 1];
 
+            if i < 2 {
+                direction = get_curr_direction(curr, next)
+            }
+                    
             let diff = safely_find_diff(curr, next);
             let curr_direction = get_curr_direction(curr, next);
 
@@ -86,10 +83,7 @@ pub fn find_safe_levels(reports: Vec<[i32; 5]>) -> i32 {
          }
 
         if is_safe {
-            println!("Report #{} is safe.", report_index + 1);
             safe_levels += 1;
-        } else {
-            println!("Report #{} is unsafe.", report_index + 1);
         }
     }
 
