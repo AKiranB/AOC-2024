@@ -89,6 +89,7 @@ pub fn calculate_similarity_score(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
     }
 
     let mut similarity_score: i32 = 0;
+    
     for (&num, &left_count) in left_map.iter() {
         if let Some(&right_count) = right_map.get(&num) { 
             similarity_score += num * (left_count * right_count);
