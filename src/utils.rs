@@ -23,11 +23,20 @@ pub fn split_into_two_arrs(data: &str) -> SplitArrays {
 }
 
 pub fn get_report(data: &str) -> Vec<Vec<i32>> {
-
-    let mut return:
+    let mut arrs: Vec<Vec<i32>> = [].to_vec();
 
     for line in data.lines(){
+        let nums_result: Result<Vec<i32>, _> = line
+        .split_whitespace()  
+        .map(|num_str| num_str.parse::<i32>())
+        .collect(); 
 
+        match nums_result {
+            Ok(nums) => {if nums.len() > 0 {arrs.push(nums)}},
+            Err(e)   => eprintln!("Parse error: {}", e),
+        } 
     }
-
+    arrs
 }
+
+

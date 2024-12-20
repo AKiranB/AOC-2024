@@ -64,12 +64,13 @@ pub fn find_safe_levels(reports: Vec<Vec<i32>> ) -> i32 {
             let curr = report[i];
             let next = report[i + 1];
 
-            if i < 2 {
+            if i == 0 {
                 direction = get_curr_direction(curr, next)
             }
                     
             let diff = safely_find_diff(curr, next);
             let curr_direction = get_curr_direction(curr, next);
+
 
             if has_direction_changed(direction, curr_direction) {
                 is_safe = false;
@@ -82,10 +83,14 @@ pub fn find_safe_levels(reports: Vec<Vec<i32>> ) -> i32 {
             }
          }
 
-        if is_safe {
+        if is_safe { 
             safe_levels += 1;
         }
     }
-
     safe_levels
 }
+
+
+
+//PT 2
+

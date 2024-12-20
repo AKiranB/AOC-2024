@@ -72,7 +72,6 @@ pub fn calculate_similarity_score(left: &Vec<i32>, right: &Vec<i32>) -> i32 {
     let mut right_map: HashMap<i32, i32> = HashMap::new();
 
     for num in left.iter() {
-        // purposesly verbose
         if let Some(count) = left_map.get_mut(num) {
             *count += 1;
         } else {
