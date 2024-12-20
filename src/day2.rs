@@ -1,6 +1,6 @@
-// This example data contains six reports each containing five levels.
+// This example data contains six levelss each containing five levels.
 
-// The engineers are trying to figure out which reports are safe. The Red-Nosed reactor safety systems can only tolerate levels that are either gradually increasing or gradually decreasing. So, a report only counts as safe if both of the following are true:
+// The engineers are trying to figure out which levelss are safe. The Red-Nosed reactor safety systems can only tolerate levels that are either gradually increasing or gradually decreasing. So, a report only counts as safe if both of the following are true:
 
 // The levels are either all increasing or all decreasing.
 // Any two adjacent levels differ by at least one and at most three.
@@ -31,66 +31,69 @@
 //     [1, 3, 6, 7, 9], // Safe because the levels are all increasing by 1, 2, or 3.
 // ];
 
-fn safely_find_diff(n: i32, z: i32) -> i32 {
-    let res = if n > z {
-        n - z
-    } else {
-        z - n
-    };
-    res
-}
+use std::clone;
+
 
 fn has_direction_changed (prev_direction:i32, curr_direction:i32) -> bool {
     if prev_direction != curr_direction {return true}
     return false
 } 
 
-fn get_curr_direction (x:i32, z:i32) -> i32{
-    if x > z{
-        return -1
-    }else {
-        return 1
-    }
+fn get_curr_direction (curr:i32,  next:i32) -> i32{
+    if curr > next {-1} else {1}
 }
 
 pub fn find_safe_levels(reports: Vec<Vec<i32>> ) -> i32 {
     let mut safe_levels: i32 = 0;
 
     for (report_index, report) in reports.iter().enumerate() {
-        let mut is_safe: bool = true;
-        let mut direction =  1;
+        if is_safe(report) {
+            safe_levels += 1
+        }else {
+            // PT 2
+            // BRUTE FORCE :MUSCLE_EMOJI
+            for i in 0..(report.len()) {
+                let mut cloned_report = report.clone();
+                cloned_report.remove(i);
+                if is_safe(&cloned_report){
+                    safe_levels += 1;
+                    break
+                }
 
-        for i in 0..(report.len() - 1) {
-            let curr = report[i];
-            let next = report[i + 1];
-
-            if i == 0 {
-                direction = get_curr_direction(curr, next)
             }
-                    
-            let diff = safely_find_diff(curr, next);
-            let curr_direction = get_curr_direction(curr, next);
-
-
-            if has_direction_changed(direction, curr_direction) {
-                is_safe = false;
-                break;
-            }
-
-            if diff > 3 || diff == 0 {
-                is_safe = false;
-                break;
-            }
-         }
-
-        if is_safe { 
-            safe_levels += 1;
         }
     }
     safe_levels
 }
 
 
+fn is_safe (levels: &Vec<i32>) -> bool {
+    let mut direction =  1;
 
-//PT 2
+    for i in 0..(levels.len() - 1) {
+        let curr:i32 = levels[i];
+        let next:i32 = levels[i + 1];
+
+        let diff:i32 = (curr - next).abs() ;
+        let curr_direction:i32 = get_curr_direction(curr, next);
+
+
+        if i == 0 {
+            direction = get_curr_direction(curr, next)
+        }
+
+        if has_direction_changed(direction, curr_direction) {
+            return false;
+        }
+
+        if diff > 3 || diff == 0 {
+            return false;
+        }
+     }
+
+    return true
+}
+
+
+
 
